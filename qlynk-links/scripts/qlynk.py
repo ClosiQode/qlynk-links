@@ -213,7 +213,8 @@ def link_line(link, cat_labels=None):
     if cat_labels is not None:
         cat = '  [%s]' % cat_labels.get(link.get('category_id'), 'Uncategorised')
     title = ('  "%s"' % link['title']) if link.get('title') else ''
-    return '%s  ->  %s%s%s' % (link['short_url'], link['original_url'], title, cat)
+    paused = '  [PAUSED: does not redirect]' if link.get('status') == 'paused' else ''
+    return '%s  ->  %s%s%s%s' % (link['short_url'], link['original_url'], title, cat, paused)
 
 
 def describe_link(link, cat_labels):
@@ -223,6 +224,7 @@ def describe_link(link, cat_labels):
         ('Title', link.get('title') or '-'),
         ('Category', cat_labels.get(link.get('category_id'), 'Uncategorised')),
         ('Opens the app', link.get('app') or '-'),
+        ('Status', 'paused since %s (does not redirect; back to Pro or keep it active from the dashboard)' % link.get('paused_at') if link.get('status') == 'paused' else 'active'),
         ('Expires', link.get('expires_at') or 'never'),
         ('Created', link.get('created_at') or link.get('updated_at') or '-'),
     ]

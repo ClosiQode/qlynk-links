@@ -7,10 +7,10 @@ Public documentation: https://qlynk.fr/docs/api.php
 
 - Header `Authorization: Bearer <key>` on every request; JSON bodies with `Content-Type: application/json`.
 - Keys are created at https://qlynk.fr/api-keys.php and shown once. Missing, malformed or revoked key: `401`.
-- Daily quota per account (all keys together), renewed at midnight: Free 100 requests, Pro 10,000.
+- Daily quota per account (all keys together), renewed at midnight: Free 50 requests, Pro 10,000.
   Headers on each answer: `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset` (Unix time).
   Over quota: `429` with `Retry-After` (seconds) and a body `{ "limit", "window": "day", "retry_after" }`. Refused requests do not count.
-- Plan limits also apply: monthly and daily caps on new links (Free), expiry date reserved to Pro (`403`).
+- Plan limits also apply (`403`): Free accounts can have 10 active links at a time (deleting one frees its slot; a link disabled by moderation cannot be deleted and keeps its slot) plus a daily cap that also counts deleted links; `custom_code` (choosing or changing the ending) and `expires_at` are reserved to Pro.
 
 ## Answer format
 
@@ -21,7 +21,7 @@ Codes: 200/201 success, 400 invalid request, 401 key, 403 not yours or plan limi
 
 | Method | Path | Notes |
 |---|---|---|
-| POST | `/urls` | Body: `url` (required), `custom_code` (max 50), `title` (255), `description` (1000), `is_indexed` (bool), `category_id` (int or null), `expires_at` (`YYYY-MM-DD` or date-time, Pro). Returns 201. |
+| POST | `/urls` | Body: `url` (required), `custom_code` (max 50, Pro only), `title` (255), `description` (1000), `is_indexed` (bool), `category_id` (int or null), `expires_at` (`YYYY-MM-DD` or date-time, Pro). Returns 201. |
 | GET | `/urls` | Query: `category_id` (int, or `none` for uncategorised), `include_children=0` to exclude sub-categories. Returns `{ total, urls[] }`, newest first. |
 | GET | `/urls/{code}` | One link. |
 | PATCH or PUT | `/urls/{code}` | Only the fields sent change. `url`, `custom_code`, `title`, `description`, `is_indexed`, `category_id` (null = uncategorised), `expires_at` (null = none). |
@@ -50,3 +50,5 @@ There is no endpoint for totals across all links: `scripts/qlynk.py summary` cal
 ## QR codes
 
 There is no QR endpoint. `scripts/qlynk.py qr` computes the QR code locally (`scripts/qr.py`) for `https://qlynk.fr/<code>?qr=1`; the `qr=1` parameter makes Qlynk count the visit as a QR scan.
+
+Link status: each link in `GET /urls` and `GET /urls/{code}` has `status` (`active` or `paused`) and `paused_at`. A paused link (Free account over its active-link limit, 7 days after a Pro plan ended) answers HTTP 423 to visitors and does not count toward the active-link limit; it is reactivated automatically when the account is Pro again.
