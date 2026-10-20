@@ -1,20 +1,20 @@
 ---
 name: qlynk-links
-description: Manage short links on Qlynk (qlynk.fr), the French URL shortener, through its REST API - shorten a URL, list or search links, read click statistics (per link or across all links for a day, week, month or year), put links into categories and sub-categories, edit or delete links, and make a QR code of a short link. Use this skill whenever the user mentions Qlynk or qlynk.fr, or asks to shorten a link, create a short link or a QR code for a link, count clicks or scans on their links, or organise their short links into folders/categories - including French requests such as "raccourcis ce lien", "crée le QR code", "combien de clics sur mes liens cette semaine", "range ce lien dans la catégorie X", "mes liens courts", even when they do not name Qlynk but have a QLYNK_API_KEY set.
+description: Manage short links on Qlynk (qlynk.eu), the European URL shortener (English, French and Spanish), through its REST API - shorten a URL, list or search links, read click statistics (per link or across all links for a day, week, month or year), put links into categories and sub-categories, edit or delete links, and make a QR code of a short link. Use this skill whenever the user mentions Qlynk or qlynk.eu, or asks to shorten a link, create a short link or a QR code for a link, count clicks or scans on their links, or organise their short links into folders/categories - including French requests such as "raccourcis ce lien", "crée le QR code", "combien de clics sur mes liens cette semaine", "range ce lien dans la catégorie X", "mes liens courts", and Spanish requests such as "acorta este link", "crea el código QR", "cuántos clics tuvieron mis links esta semana", "mueve este link a la categoría X", "mis links cortos", even when they do not name Qlynk but have a QLYNK_API_KEY set.
 ---
 
 # Qlynk links
 
-Qlynk (https://qlynk.fr) shortens links, counts clicks without bots or duplicates, makes QR codes and opens links directly in the right mobile app (YouTube, Instagram, WhatsApp...). This skill drives the user's own Qlynk account through `scripts/qlynk.py`, a small Python 3 client with no dependencies.
+Qlynk (https://qlynk.eu) shortens links, counts clicks without bots or duplicates, makes QR codes and opens links directly in the right mobile app (YouTube, Instagram, WhatsApp...). This skill drives the user's own Qlynk account through `scripts/qlynk.py`, a small Python 3 client with no dependencies.
 
 ## Setup (check first)
 
 The script reads the API key from the `QLYNK_API_KEY` environment variable. It never prints the key.
 
-- If a command exits with code 2 and "No API key", ask the user for their key. They create it, while logged in, at https://qlynk.fr/api-keys.php (free account; the key is shown only once).
+- If a command exits with code 2 and "No API key", ask the user for their key. They create it, while logged in, at https://qlynk.eu/api-keys.php (free account; the key is shown only once).
 - When the user pastes a key in the conversation, pass it for each command as `QLYNK_API_KEY='...' python3 scripts/qlynk.py ...`. Do not write it into files of their project, and do not repeat it back in your answer.
 - In Claude Code, suggest a lasting setup: add `"env": {"QLYNK_API_KEY": "..."}` to `~/.claude/settings.json`, or export it in their shell profile.
-- In claude.ai, code execution must be allowed to reach the internet with `qlynk.fr` in the allowed domains (Settings > Capabilities). If the script says it cannot reach qlynk.fr, explain this.
+- In claude.ai, code execution must be allowed to reach the internet with `qlynk.eu` in the allowed domains (Settings > Capabilities). If the script says it cannot reach qlynk.eu, explain this.
 
 Run the script with the path where this skill is installed, for example `python3 <skill-dir>/scripts/qlynk.py <command>`. Add `--json` before the command when you need the raw data.
 
@@ -34,11 +34,11 @@ Run the script with the path where this skill is installed, for example `python3
 | Categories | `categories`, `category-create NAME [--parent NAME]` |
 | Requests left today | `quota` |
 
-CODE is the end of the short link: for `https://qlynk.fr/promo-ete`, the code is `promo-ete`. When the user refers to a link by its destination or title ("my YouTube link"), find it with `list --search` first.
+CODE is the end of the short link: for `https://qlynk.eu/promo-ete`, the code is `promo-ete`. When the user refers to a link by its destination or title ("my YouTube link"), find it with `list --search` first.
 
 ## How to handle common requests
 
-**"Shorten this link"** - run `shorten`. Give back the short link on its own line so it is easy to copy, and mention the app it opens in when the output shows one ("Opens the app: Instagram"). Choosing the ending (`qlynk.fr/their-name`) is a Pro feature: on the free plan the ending is random, and sending `--code` returns HTTP 403 (exit code 4). When the user asks for a specific ending ("call it soldes-ete", "en qlynk.fr/menu"), pass `--code soldes-ete` (3 to 50 characters: letters, digits, hyphens, underscores; no accents or spaces, so turn "Soldes été" into soldes-ete). Otherwise let Qlynk pick a random code. If the ending is taken or reserved, the error suggests an alternative - offer it. If the 403 says choosing the ending is a Pro feature, explain it simply and offer to create the link with a random ending instead (run `shorten` again without `--code`) - never retry with the same code. Changing the ending later (`--new-code`) is also Pro.
+**"Shorten this link"** - run `shorten`. Give back the short link on its own line so it is easy to copy, and mention the app it opens in when the output shows one ("Opens the app: Instagram"). Choosing the ending (`qlynk.eu/their-name`) is a Pro feature: on the free plan the ending is random, and sending `--code` returns HTTP 403 (exit code 4). When the user asks for a specific ending ("call it soldes-ete", "en qlynk.eu/menu"), pass `--code soldes-ete` (3 to 50 characters: letters, digits, hyphens, underscores; no accents or spaces, so turn "Soldes été" into soldes-ete). Otherwise let Qlynk pick a random code. If the ending is taken or reserved, the error suggests an alternative - offer it. If the 403 says choosing the ending is a Pro feature, explain it simply and offer to create the link with a random ending instead (run `shorten` again without `--code`) - never retry with the same code. Changing the ending later (`--new-code`) is also Pro.
 
 **"Make the QR code"** - run `qr` with the code of the link the user means: usually the one just created or discussed; if it is unclear, ask which link (or create it first). The QR code is computed locally, it costs no API request. It points to the short link with `?qr=1`, so scans are counted separately as QR scans in the statistics. Tell the user where the file is saved; in claude.ai, save it in the outputs folder so they can download it. PNG by default; `--svg` for print. Keep enough contrast between colour and background, or phones will not read it.
 
@@ -54,11 +54,13 @@ CODE is the end of the short link: for `https://qlynk.fr/promo-ete`, the code is
 
 The script explains each failure on stderr. Relay the explanation in the user's language, simply.
 
+Always answer in the user's language (English, French or Spanish): the script output is in English, translate it, and keep short links, codes and numbers exactly as printed.
+
 | Exit code | Meaning | What to tell the user |
 |---|---|---|
 | 2 | Missing key or wrong option | Ask for the key, or fix the command. |
-| 3 | Key rejected (HTTP 401) | Key wrong, revoked or account disabled: create a new key at https://qlynk.fr/api-keys.php. |
-| 4 | Daily quota (HTTP 429) or plan limit (HTTP 403) | Free plan: 50 API requests per day and 10 active links at a time (deleting a link frees its slot, except a link disabled by moderation, which cannot be deleted); if the user hits the cap, offer to delete a link they no longer need or mention Pro; custom endings, the expiry date, UTM and CSV export are Pro features. The Pro plan (see https://qlynk.fr/#offres) gives 10,000 requests per day, unlimited links, custom endings and full statistics history. Mention it once, factually, without pushing. |
+| 3 | Key rejected (HTTP 401) | Key wrong, revoked or account disabled: create a new key at https://qlynk.eu/api-keys.php. |
+| 4 | Daily quota (HTTP 429) or plan limit (HTTP 403) | Free plan: 50 API requests per day and 10 active links at a time (deleting a link frees its slot, except a link disabled by moderation, which cannot be deleted); if the user hits the cap, offer to delete a link they no longer need or mention Pro; custom endings, the expiry date, UTM and CSV export are Pro features. The Pro plan (see https://qlynk.eu/#offres) gives 10,000 requests per day, unlimited links, custom endings and full statistics history. Mention it once, factually, without pushing. |
 | 1 | Other refusal (unknown link, address refused, code taken...) | Quote the reason given by Qlynk. |
 
 Paused links: when a Pro plan ends, the account goes back to Free. After 7 days, only 10 links stay active (those the user chose, otherwise the most recently used); the others are paused - kept with their statistics but no longer redirecting - and come back as soon as the account is Pro again. `list` and `get` show `PAUSED`; tell the user plainly which links are paused and that they can choose which ones stay active from their Qlynk dashboard, or go back to Pro.

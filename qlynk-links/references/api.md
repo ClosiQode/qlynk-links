@@ -1,12 +1,12 @@
 # Qlynk REST API v1 - reference
 
-Base URL: `https://qlynk.fr/api/v1` (override with the `QLYNK_API_URL` environment variable).
-Public documentation: https://qlynk.fr/docs/api.php
+Base URL: `https://qlynk.eu/api/v1` (override with the `QLYNK_API_URL` environment variable).
+Public documentation: https://qlynk.eu/docs/api.php
 
 ## Authentication and quotas
 
 - Header `Authorization: Bearer <key>` on every request; JSON bodies with `Content-Type: application/json`.
-- Keys are created at https://qlynk.fr/api-keys.php and shown once. Missing, malformed or revoked key: `401`.
+- Keys are created at https://qlynk.eu/api-keys.php and shown once. Missing, malformed or revoked key: `401`.
 - Daily quota per account (all keys together), renewed at midnight: Free 50 requests, Pro 10,000.
   Headers on each answer: `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset` (Unix time).
   Over quota: `429` with `Retry-After` (seconds) and a body `{ "limit", "window": "day", "retry_after" }`. Refused requests do not count.
@@ -14,7 +14,7 @@ Public documentation: https://qlynk.fr/docs/api.php
 
 ## Answer format
 
-Success: `{ "success": true, "data": ... }`. Error: `{ "success": false, "error": "message in French" }`.
+Success: `{ "success": true, "data": ... }`. Error: `{ "success": false, "error": "message", "code": "stable_code" }`. The message follows the request language (English by default); test `code` (for example `pro_required`, `link_limit_reached`, `link_not_found`, `invalid_url`), never the message text.
 Codes: 200/201 success, 400 invalid request, 401 key, 403 not yours or plan limit, 404 not found, 405 method, 429 quota, 500 server, 503 API turned off.
 
 ## Links
@@ -49,6 +49,6 @@ There is no endpoint for totals across all links: `scripts/qlynk.py summary` cal
 
 ## QR codes
 
-There is no QR endpoint. `scripts/qlynk.py qr` computes the QR code locally (`scripts/qr.py`) for `https://qlynk.fr/<code>?qr=1`; the `qr=1` parameter makes Qlynk count the visit as a QR scan.
+There is no QR endpoint. `scripts/qlynk.py qr` computes the QR code locally (`scripts/qr.py`) for `https://qlynk.eu/<code>?qr=1`; the `qr=1` parameter makes Qlynk count the visit as a QR scan.
 
 Link status: each link in `GET /urls` and `GET /urls/{code}` has `status` (`active` or `paused`) and `paused_at`. A paused link (Free account over its active-link limit, 7 days after a Pro plan ended) answers HTTP 423 to visitors and does not count toward the active-link limit; it is reactivated automatically when the account is Pro again.

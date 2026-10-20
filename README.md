@@ -2,11 +2,11 @@
 
 Français | [English](#english)
 
-Un skill pour Claude.ai et Claude Code qui pilote votre compte [Qlynk](https://qlynk.fr), le raccourcisseur de liens français, en langage courant : « raccourcis ce lien », « crée le QR code », « combien de clics cette semaine ? ».
+Un skill pour Claude.ai et Claude Code qui pilote votre compte [Qlynk](https://qlynk.eu), le raccourcisseur de liens français, en langage courant : « raccourcis ce lien », « crée le QR code », « combien de clics cette semaine ? ».
 
 ## Ce que fait le skill
 
-- Créer des liens courts, avec une fin personnalisée (`qlynk.fr/soldes-ete`).
+- Créer des liens courts, avec une fin personnalisée (`qlynk.eu/soldes-ete`).
 - Créer le QR code d'un lien, en PNG ou en SVG. Il est calculé sur place par le script, sans service extérieur.
 - Lire les clics d'un lien ou de tous vos liens, par jour, semaine, mois ou année.
 - Ranger les liens dans des catégories et des sous-catégories.
@@ -29,7 +29,7 @@ Tout est lisible : vous pouvez vérifier ce que fait le skill avant de l'install
 ## Clé API
 
 1. Connectez-vous à Qlynk (un compte gratuit suffit).
-2. Créez une clé sur [https://qlynk.fr/api-keys.php](https://qlynk.fr/api-keys.php). Elle n'est affichée qu'une fois : copiez-la tout de suite.
+2. Créez une clé sur [https://qlynk.eu/api-keys.php](https://qlynk.eu/api-keys.php). Elle n'est affichée qu'une fois : copiez-la tout de suite.
 3. Le script la lit dans la variable d'environnement `QLYNK_API_KEY` et ne l'affiche jamais. Vous pouvez la révoquer à tout moment.
 
 ## Installation
@@ -37,8 +37,8 @@ Tout est lisible : vous pouvez vérifier ce que fait le skill avant de l'install
 ### Dans Claude.ai ou l'application Claude
 
 1. Créez votre clé API (voir ci-dessus).
-2. Téléchargez le skill en `.zip` sur [https://qlynk.fr/outils/skill-claude/](https://qlynk.fr/outils/skill-claude/), sans le décompresser. Vous pouvez aussi zipper le dossier `qlynk-links/` de ce dépôt.
-3. Dans Claude, ouvrez Réglages, puis Capacités. Activez l'exécution de code avec l'accès au réseau, et ajoutez `qlynk.fr` aux domaines autorisés.
+2. Téléchargez le skill en `.zip` sur [https://qlynk.eu/outils/skill-claude/](https://qlynk.eu/outils/skill-claude/), sans le décompresser. Vous pouvez aussi zipper le dossier `qlynk-links/` de ce dépôt.
+3. Dans Claude, ouvrez Réglages, puis Capacités. Activez l'exécution de code avec l'accès au réseau, et ajoutez `qlynk.eu` aux domaines autorisés.
 4. Dans la partie Skills, choisissez « Importer un skill » et sélectionnez le fichier `.zip`.
 5. Dans une conversation, collez votre clé quand Claude la demande, puis écrivez votre demande.
 
@@ -64,13 +64,13 @@ Tout est lisible : vous pouvez vérifier ce que fait le skill avant de l'install
 
 ## Offres et quotas
 
-Chaque action passe par l'API de Qlynk et compte dans un quota de requêtes par jour, qui dépend de l'offre (Gratuit ou Pro). Le QR code, calculé sur place, ne compte pas. Les limites et les tarifs à jour sont sur [https://qlynk.fr/#offres](https://qlynk.fr/#offres). Quand une limite est atteinte, Claude le dit et indique quand réessayer.
+Chaque action passe par l'API de Qlynk et compte dans un quota de requêtes par jour, qui dépend de l'offre (Gratuit ou Pro). Le QR code, calculé sur place, ne compte pas. Les limites et les tarifs à jour sont sur [https://qlynk.eu/#offres](https://qlynk.eu/#offres). Quand une limite est atteinte, Claude le dit et indique quand réessayer.
 
 ## Liens
 
-- Page du skill : [https://qlynk.fr/outils/skill-claude/](https://qlynk.fr/outils/skill-claude/)
-- Documentation de l'API : [https://qlynk.fr/docs/api.php](https://qlynk.fr/docs/api.php)
-- Clés API : [https://qlynk.fr/api-keys.php](https://qlynk.fr/api-keys.php)
+- Page du skill : [https://qlynk.eu/outils/skill-claude/](https://qlynk.eu/outils/skill-claude/)
+- Documentation de l'API : [https://qlynk.eu/docs/api.php](https://qlynk.eu/docs/api.php)
+- Clés API : [https://qlynk.eu/api-keys.php](https://qlynk.eu/api-keys.php)
 
 ## Licence
 
@@ -80,11 +80,11 @@ MIT, voir [LICENSE](LICENSE). Skill publié par ClosiQode (Fabien Kost).
 
 ## English
 
-A skill for Claude.ai and Claude Code that drives your [Qlynk](https://qlynk.fr) account (a French URL shortener) in plain language: "shorten this link", "make the QR code", "how many clicks this week?".
+A skill for Claude.ai and Claude Code that drives your [Qlynk](https://qlynk.eu) account (a French URL shortener) in plain language: "shorten this link", "make the QR code", "how many clicks this week?".
 
 ### What it does
 
-- Create short links, with a custom ending (`qlynk.fr/summer-sale`).
+- Create short links, with a custom ending (`qlynk.eu/summer-sale`).
 - Make the QR code of a link, as PNG or SVG. It is computed locally by the script, with no external service.
 - Read clicks for one link or all your links, by day, week, month or year.
 - Organise links into categories and sub-categories.
@@ -107,7 +107,7 @@ Everything is readable, so you can check what the skill does before installing i
 ### API key
 
 1. Log in to Qlynk (a free account is enough).
-2. Create a key at [https://qlynk.fr/api-keys.php](https://qlynk.fr/api-keys.php). It is shown only once: copy it right away.
+2. Create a key at [https://qlynk.eu/api-keys.php](https://qlynk.eu/api-keys.php). It is shown only once: copy it right away.
 3. The script reads it from the `QLYNK_API_KEY` environment variable and never prints it. You can revoke it at any time.
 
 ### Installation
@@ -115,8 +115,8 @@ Everything is readable, so you can check what the skill does before installing i
 #### In Claude.ai or the Claude app
 
 1. Create your API key (see above).
-2. Download the skill as a `.zip` from [https://qlynk.fr/outils/skill-claude/](https://qlynk.fr/outils/skill-claude/), without unzipping it. You can also zip the `qlynk-links/` folder of this repository.
-3. In Claude, open Settings, then Capabilities. Enable code execution with network access, and add `qlynk.fr` to the allowed domains.
+2. Download the skill as a `.zip` from [https://qlynk.eu/outils/skill-claude/](https://qlynk.eu/outils/skill-claude/), without unzipping it. You can also zip the `qlynk-links/` folder of this repository.
+3. In Claude, open Settings, then Capabilities. Enable code execution with network access, and add `qlynk.eu` to the allowed domains.
 4. In the Skills section, choose "Upload skill" and select the `.zip` file.
 5. In a conversation, paste your key when Claude asks for it, then write your request.
 
@@ -142,13 +142,13 @@ Everything is readable, so you can check what the skill does before installing i
 
 ### Plans and quotas
 
-Every action goes through the Qlynk API and counts toward a daily request quota that depends on your plan (Free or Pro). The QR code, computed locally, does not count. Current limits and pricing are at [https://qlynk.fr/#offres](https://qlynk.fr/#offres). When a limit is reached, Claude says so and tells you when to retry.
+Every action goes through the Qlynk API and counts toward a daily request quota that depends on your plan (Free or Pro). The QR code, computed locally, does not count. Current limits and pricing are at [https://qlynk.eu/#offres](https://qlynk.eu/#offres). When a limit is reached, Claude says so and tells you when to retry.
 
 ### Links
 
-- Skill page: [https://qlynk.fr/outils/skill-claude/](https://qlynk.fr/outils/skill-claude/)
-- API documentation: [https://qlynk.fr/docs/api.php](https://qlynk.fr/docs/api.php)
-- API keys: [https://qlynk.fr/api-keys.php](https://qlynk.fr/api-keys.php)
+- Skill page: [https://qlynk.eu/outils/skill-claude/](https://qlynk.eu/outils/skill-claude/)
+- API documentation: [https://qlynk.eu/docs/api.php](https://qlynk.eu/docs/api.php)
+- API keys: [https://qlynk.eu/api-keys.php](https://qlynk.eu/api-keys.php)
 
 ### License
 

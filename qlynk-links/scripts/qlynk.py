@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Command line client for the Qlynk REST API (https://qlynk.fr/docs/api.php).
+"""Command line client for the Qlynk REST API (https://qlynk.eu/docs/api.php).
 
 Standard library only. The API key is read from the QLYNK_API_KEY environment
 variable (or from a file given with --key-file). It is never printed.
@@ -24,7 +24,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
-DEFAULT_API = 'https://qlynk.fr/api/v1'
+DEFAULT_API = 'https://qlynk.eu/api/v1'
 USER_AGENT = 'qlynk-claude-skill/1.0'
 PERIODS = ('day', 'week', 'month', 'year', 'all')
 
@@ -112,7 +112,8 @@ class Client:
                 'Daily API quota reached (HTTP 429): %s\nQuota: %s requests per day, renewed at midnight '
                 'in about %s. The Pro plan raises the quota to 10,000 requests per day: %s'
                 % (message, limit or '?', _duration(wait), pro), 4)
-        if status == 403 and any(w in message.lower() for w in ('offre', 'pro', 'limite', 'plafond')):
+        code = payload.get('code') if isinstance(payload, dict) else None
+        if status == 403 and (code in ('pro_required', 'link_limit_reached') or any(w in message.lower() for w in ('offre', 'plan', 'pro', 'limit', 'limite', 'plafond'))):
             raise Stop('Plan limit (HTTP 403): %s\nSee the Pro plan: %s' % (message, pro), 4)
         if status == 503:
             raise Stop('The Qlynk API is turned off for now (HTTP 503): %s' % message, 1)
@@ -456,7 +457,7 @@ def build_parser():
 
     s = sub.add_parser('shorten', help='create a short link')
     s.add_argument('url')
-    s.add_argument('--code', help='custom end of the link (qlynk.fr/<code>)')
+    s.add_argument('--code', help='custom end of the link (qlynk.eu/<code>)')
     s.add_argument('--title')
     s.add_argument('--description')
     s.add_argument('--category', help='category name, "Parent > Child", or id')
@@ -553,7 +554,7 @@ def main(argv=None):
         key = read_key(args)
         if args.command != 'qr' and not key:
             raise Stop('No API key. Set the QLYNK_API_KEY environment variable. The key is created at '
-                       'https://qlynk.fr/api-keys.php (free account) and shown only once.', 2)
+                       'https://qlynk.eu/api-keys.php (free account) and shown only once.', 2)
         client = Client(key, api_url)
         args.func(client, args)
         if client.remaining is not None and client.remaining <= 10:
