@@ -37,7 +37,7 @@ Tout est lisible : vous pouvez vérifier ce que fait le skill avant de l'install
 ### Dans Claude.ai ou l'application Claude
 
 1. Créez votre clé API (voir ci-dessus).
-2. Téléchargez le skill en `.zip` sur [https://qlynk.eu/outils/skill-claude/](https://qlynk.eu/outils/skill-claude/), sans le décompresser. Vous pouvez aussi zipper le dossier `qlynk-links/` de ce dépôt.
+2. Téléchargez [`qlynk-links.zip`](https://github.com/ClosiQode/qlynk-links/releases/latest/download/qlynk-links.zip) depuis la [dernière version](https://github.com/ClosiQode/qlynk-links/releases/latest), sans le décompresser. Le guide complet est sur [https://qlynk.eu/outils/skill-claude/](https://qlynk.eu/outils/skill-claude/).
 3. Dans Claude, ouvrez Réglages, puis Capacités. Activez l'exécution de code avec l'accès au réseau, et ajoutez `qlynk.eu` aux domaines autorisés.
 4. Dans la partie Skills, choisissez « Importer un skill » et sélectionnez le fichier `.zip`.
 5. Dans une conversation, collez votre clé quand Claude la demande, puis écrivez votre demande.
@@ -115,7 +115,7 @@ Everything is readable, so you can check what the skill does before installing i
 #### In Claude.ai or the Claude app
 
 1. Create your API key (see above).
-2. Download the skill as a `.zip` from [https://qlynk.eu/en/tools/claude-skill/](https://qlynk.eu/en/tools/claude-skill/), without unzipping it. You can also zip the `qlynk-links/` folder of this repository.
+2. Download [`qlynk-links.zip`](https://github.com/ClosiQode/qlynk-links/releases/latest/download/qlynk-links.zip) from the [latest release](https://github.com/ClosiQode/qlynk-links/releases/latest), without unzipping it. The full guide is at [https://qlynk.eu/en/tools/claude-skill/](https://qlynk.eu/en/tools/claude-skill/).
 3. In Claude, open Settings, then Capabilities. Enable code execution with network access, and add `qlynk.eu` to the allowed domains.
 4. In the Skills section, choose "Upload skill" and select the `.zip` file.
 5. In a conversation, paste your key when Claude asks for it, then write your request.
@@ -193,7 +193,7 @@ Todo es legible: puedes comprobar lo que hace el skill antes de instalarlo.
 #### En Claude.ai o la aplicación de Claude
 
 1. Crea tu clave API (ver arriba).
-2. Descarga el skill en `.zip` desde [https://qlynk.eu/es/herramientas/skill-claude/](https://qlynk.eu/es/herramientas/skill-claude/), sin descomprimirlo. También puedes comprimir la carpeta `qlynk-links/` de este repositorio.
+2. Descarga [`qlynk-links.zip`](https://github.com/ClosiQode/qlynk-links/releases/latest/download/qlynk-links.zip) desde la [última versión](https://github.com/ClosiQode/qlynk-links/releases/latest), sin descomprimirlo. La guía completa está en [https://qlynk.eu/es/herramientas/skill-claude/](https://qlynk.eu/es/herramientas/skill-claude/).
 3. En Claude, abre Configuración y luego Capacidades. Activa la ejecución de código con acceso a la red y añade `qlynk.eu` a los dominios permitidos.
 4. En la sección Skills, elige «Subir skill» y selecciona el archivo `.zip`.
 5. En una conversación, pega tu clave cuando Claude te la pida y escribe lo que necesitas.
