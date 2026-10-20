@@ -1,6 +1,6 @@
 # Qlynk Links, skill Claude
 
-Français | [English](#english)
+Français | [English](#english) | [Español](#español)
 
 Un skill pour Claude.ai et Claude Code qui pilote votre compte [Qlynk](https://qlynk.eu), le raccourcisseur de liens français, en langage courant : « raccourcis ce lien », « crée le QR code », « combien de clics cette semaine ? ».
 
@@ -80,7 +80,7 @@ MIT, voir [LICENSE](LICENSE). Skill publié par ClosiQode (Fabien Kost).
 
 ## English
 
-A skill for Claude.ai and Claude Code that drives your [Qlynk](https://qlynk.eu) account (a French URL shortener) in plain language: "shorten this link", "make the QR code", "how many clicks this week?".
+A skill for Claude.ai and Claude Code that drives your [Qlynk](https://qlynk.eu) account (a URL shortener made in France, in English, French and Spanish) in plain language: "shorten this link", "make the QR code", "how many clicks this week?".
 
 ### What it does
 
@@ -115,7 +115,7 @@ Everything is readable, so you can check what the skill does before installing i
 #### In Claude.ai or the Claude app
 
 1. Create your API key (see above).
-2. Download the skill as a `.zip` from [https://qlynk.eu/outils/skill-claude/](https://qlynk.eu/outils/skill-claude/), without unzipping it. You can also zip the `qlynk-links/` folder of this repository.
+2. Download the skill as a `.zip` from [https://qlynk.eu/en/tools/claude-skill/](https://qlynk.eu/en/tools/claude-skill/), without unzipping it. You can also zip the `qlynk-links/` folder of this repository.
 3. In Claude, open Settings, then Capabilities. Enable code execution with network access, and add `qlynk.eu` to the allowed domains.
 4. In the Skills section, choose "Upload skill" and select the `.zip` file.
 5. In a conversation, paste your key when Claude asks for it, then write your request.
@@ -142,14 +142,92 @@ Everything is readable, so you can check what the skill does before installing i
 
 ### Plans and quotas
 
-Every action goes through the Qlynk API and counts toward a daily request quota that depends on your plan (Free or Pro). The QR code, computed locally, does not count. Current limits and pricing are at [https://qlynk.eu/#offres](https://qlynk.eu/#offres). When a limit is reached, Claude says so and tells you when to retry.
+Every action goes through the Qlynk API and counts toward a daily request quota that depends on your plan (Free or Pro). The QR code, computed locally, does not count. Current limits and pricing are at [https://qlynk.eu/en/#pricing](https://qlynk.eu/en/#pricing). When a limit is reached, Claude says so and tells you when to retry.
 
 ### Links
 
-- Skill page: [https://qlynk.eu/outils/skill-claude/](https://qlynk.eu/outils/skill-claude/)
+- Skill page: [https://qlynk.eu/en/tools/claude-skill/](https://qlynk.eu/en/tools/claude-skill/)
 - API documentation: [https://qlynk.eu/docs/api.php](https://qlynk.eu/docs/api.php)
 - API keys: [https://qlynk.eu/api-keys.php](https://qlynk.eu/api-keys.php)
 
 ### License
 
 MIT, see [LICENSE](LICENSE). Skill published by ClosiQode (Fabien Kost).
+
+---
+
+## Español
+
+Un skill para Claude.ai y Claude Code que maneja tu cuenta de [Qlynk](https://qlynk.eu/es/) (un acortador de links hecho en Francia, en español, inglés y francés) en lenguaje natural: «acorta este link», «crea el código QR», «¿cuántos clics tuve esta semana?».
+
+### Qué hace
+
+- Crear links cortos, con un final personalizado (`qlynk.eu/rebajas-verano`).
+- Generar el código QR de un link, en PNG o SVG. El script lo calcula en local, sin ningún servicio externo.
+- Consultar los clics de un link o de todos tus links, por día, semana, mes o año.
+- Ordenar los links en categorías y subcategorías.
+- Editar, renombrar y eliminar links (Claude pide confirmación antes de eliminar).
+
+El skill llama a la API REST de Qlynk con tu clave. Los errores 401 (clave rechazada) y 429 (límite alcanzado) y los límites de cada plan se explican con claridad. Basta con Python 3, sin dependencias. Claude te responde en tu idioma: español, inglés o francés.
+
+### Contenido
+
+```
+qlynk-links/
+  SKILL.md             instrucciones que lee Claude
+  scripts/qlynk.py     cliente de la API
+  scripts/qr.py        generación del código QR
+  references/api.md    referencia de la API
+```
+
+Todo es legible: puedes comprobar lo que hace el skill antes de instalarlo.
+
+### Clave API
+
+1. Inicia sesión en Qlynk (basta con una cuenta gratuita).
+2. Crea una clave en [https://qlynk.eu/api-keys.php](https://qlynk.eu/api-keys.php). Solo se muestra una vez: cópiala enseguida.
+3. El script la lee de la variable de entorno `QLYNK_API_KEY` y nunca la muestra. Puedes revocarla en cualquier momento.
+
+### Instalación
+
+#### En Claude.ai o la aplicación de Claude
+
+1. Crea tu clave API (ver arriba).
+2. Descarga el skill en `.zip` desde [https://qlynk.eu/es/herramientas/skill-claude/](https://qlynk.eu/es/herramientas/skill-claude/), sin descomprimirlo. También puedes comprimir la carpeta `qlynk-links/` de este repositorio.
+3. En Claude, abre Configuración y luego Capacidades. Activa la ejecución de código con acceso a la red y añade `qlynk.eu` a los dominios permitidos.
+4. En la sección Skills, elige «Subir skill» y selecciona el archivo `.zip`.
+5. En una conversación, pega tu clave cuando Claude te la pida y escribe lo que necesitas.
+
+#### En Claude Code (skills personales)
+
+1. Crea tu clave API.
+2. Copia la carpeta `qlynk-links/` en tus skills personales:
+
+   ```bash
+   git clone https://github.com/ClosiQode/qlynk-links.git
+   mkdir -p ~/.claude/skills && cp -R qlynk-links/qlynk-links ~/.claude/skills/
+   ```
+
+3. Da la clave a Claude Code de una vez por todas en `~/.claude/settings.json`:
+
+   ```json
+   {
+     "env": { "QLYNK_API_KEY": "tu-clave-api" }
+   }
+   ```
+
+4. Reinicia Claude Code y pide: «acorta https://… con Qlynk».
+
+### Planes y cuotas
+
+Cada acción pasa por la API de Qlynk y cuenta en una cuota diaria de peticiones que depende de tu plan (Gratis o Pro). El código QR, calculado en local, no cuenta. Los límites y precios actualizados están en [https://qlynk.eu/es/#precios](https://qlynk.eu/es/#precios). Cuando se alcanza un límite, Claude te lo dice e indica cuándo volver a intentarlo.
+
+### Enlaces
+
+- Página del skill: [https://qlynk.eu/es/herramientas/skill-claude/](https://qlynk.eu/es/herramientas/skill-claude/)
+- Documentación de la API: [https://qlynk.eu/docs/api.php](https://qlynk.eu/docs/api.php)
+- Claves API: [https://qlynk.eu/api-keys.php](https://qlynk.eu/api-keys.php)
+
+### Licencia
+
+MIT, ver [LICENSE](LICENSE). Skill publicado por ClosiQode (Fabien Kost).
