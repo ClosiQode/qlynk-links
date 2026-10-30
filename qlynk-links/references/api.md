@@ -51,4 +51,4 @@ There is no endpoint for totals across all links: `scripts/qlynk.py summary` cal
 
 There is no QR endpoint. `scripts/qlynk.py qr` computes the QR code locally (`scripts/qr.py`) for `https://qlynk.eu/<code>?qr=1`; the `qr=1` parameter makes Qlynk count the visit as a QR scan.
 
-Link status: each link in `GET /urls` and `GET /urls/{code}` has `status` (`active` or `paused`) and `paused_at`. A paused link (Free account over its active-link limit, 7 days after a Pro plan ended) answers HTTP 423 to visitors and does not count toward the active-link limit; it is reactivated automatically when the account is Pro again.
+Link status: each link in `GET /urls` and `GET /urls/{code}` has `status` (`active` or `paused`) and `paused_at`. A paused link (Free account over its active-link limit, 3 days after a Pro plan ended; the 10 most recently clicked links, otherwise the most recently created, stay active) answers HTTP 423 to visitors and does not count toward the active-link limit; it is reactivated automatically when the account is Pro again.
