@@ -249,8 +249,6 @@ def cmd_shorten(client, args):
         body['description'] = args.description
     if args.expires:
         body['expires_at'] = args.expires
-    if args.no_index:
-        body['is_indexed'] = False
     if args.category:
         body['category_id'] = resolve_category(client, args.category, args.create_category)
     link = client.request('POST', '/urls', body)
@@ -295,8 +293,6 @@ def cmd_update(client, args):
         body['expires_at'] = None if _norm(args.expires) in ('none', 'never', 'jamais') else args.expires
     if args.category is not None:
         body['category_id'] = resolve_category(client, args.category, args.create_category)
-    if args.index is not None:
-        body['is_indexed'] = args.index == 'yes'
     if not body:
         raise Stop('Nothing to change. Give at least one option, for example --title "New title".', 2)
     link = client.request('PATCH', '/urls/' + urllib.parse.quote(args.code), body)
@@ -463,7 +459,6 @@ def build_parser():
     s.add_argument('--category', help='category name, "Parent > Child", or id')
     s.add_argument('--create-category', action='store_true', help='create the category if missing')
     s.add_argument('--expires', help='YYYY-MM-DD (Pro plan)')
-    s.add_argument('--no-index', action='store_true', help='ask search engines not to index the preview')
     s.set_defaults(func=cmd_shorten)
 
     s = sub.add_parser('list', help='list links, newest first')
@@ -485,7 +480,6 @@ def build_parser():
     s.add_argument('--category', help='category name, id, or "none"')
     s.add_argument('--create-category', action='store_true')
     s.add_argument('--expires', help='YYYY-MM-DD, or "none" to remove (Pro plan)')
-    s.add_argument('--index', choices=('yes', 'no'))
     s.set_defaults(func=cmd_update)
 
     s = sub.add_parser('move', help='put a link in a category')

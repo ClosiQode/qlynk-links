@@ -21,13 +21,13 @@ Codes: 200/201 success, 400 invalid request, 401 key, 403 not yours or plan limi
 
 | Method | Path | Notes |
 |---|---|---|
-| POST | `/urls` | Body: `url` (required), `custom_code` (max 50, Pro only), `title` (255), `description` (1000), `is_indexed` (bool), `category_id` (int or null), `expires_at` (`YYYY-MM-DD` or date-time, Pro). Returns 201. |
+| POST | `/urls` | Body: `url` (required), `custom_code` (max 50, Pro only), `title` (255), `description` (1000), `category_id` (int or null), `expires_at` (`YYYY-MM-DD` or date-time, Pro). Returns 201. |
 | GET | `/urls` | Query: `category_id` (int, or `none` for uncategorised), `include_children=0` to exclude sub-categories. Returns `{ total, urls[] }`, newest first. |
 | GET | `/urls/{code}` | One link. |
-| PATCH or PUT | `/urls/{code}` | Only the fields sent change. `url`, `custom_code`, `title`, `description`, `is_indexed`, `category_id` (null = uncategorised), `expires_at` (null = none). |
+| PATCH or PUT | `/urls/{code}` | Only the fields sent change. `url`, `custom_code`, `title`, `description`, `category_id` (null = uncategorised), `expires_at` (null = none). |
 | DELETE | `/urls/{code}` | Permanent. |
 
-Link object: `short_code`, `short_url`, `original_url`, `title`, `description`, `is_indexed`, `category_id`, `expires_at`, `app` (name of the mobile app the link opens, or null), `created_at`.
+Link object: `short_code`, `short_url`, `original_url`, `title`, `description`, `category_id`, `expires_at`, `app` (name of the mobile app the link opens, or null), `created_at`.
 
 ## Categories
 
