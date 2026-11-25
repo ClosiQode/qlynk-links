@@ -10,7 +10,7 @@ Public documentation: https://qlynk.eu/docs/api.php
 - Daily quota per account (all keys together), renewed at midnight: Free 50 requests, Pro 10,000.
   Headers on each answer: `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset` (Unix time).
   Over quota: `429` with `Retry-After` (seconds) and a body `{ "limit", "window": "day", "retry_after" }`. Refused requests do not count.
-- Plan limits also apply (`403`): Free accounts can have 10 active links at a time (deleting one frees its slot; a link disabled by moderation cannot be deleted and keeps its slot) plus a daily cap that also counts deleted links; `custom_code` (choosing or changing the ending) and `expires_at` are reserved to Pro.
+- Plan limits also apply (`403`): Free accounts can have 10 active links at a time (deleting one frees its slot; a link disabled by moderation cannot be deleted and keeps its slot) plus 20 new links per day (deleted links still count) and 100 new links per day from the same IP address, across all accounts; Pro accounts can create up to 500 new links per day per account (no IP cap). Over a cap the API answers `403` with `code` = `link_limit_reached`: stop and wait, do not retry in a loop (the cap is a rolling 24 hours). `custom_code` (choosing or changing the ending) and `expires_at` are reserved to Pro.
 
 ## Answer format
 
